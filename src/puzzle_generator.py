@@ -48,7 +48,7 @@ class PuzzleGenerator:
             num1 = random.randint(num_range[0], num_range[1])
             num2 = random.randint(num_range[0], num_range[1])
             
-            # Calculate answer based on operation
+            # Calculate answer based on operation.
             if operation == '+':
                 answer = num1 + num2
             elif operation == '-':
