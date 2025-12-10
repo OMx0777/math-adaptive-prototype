@@ -1,5 +1,5 @@
 """
-this code Generates math problems dynamically based on difficulty level using random module
+Puzzle Generates math problems based on difficulty level
 """
 import random
 
@@ -12,7 +12,15 @@ class PuzzleGenerator:
         }
     
     def generate_puzzle(self, difficulty='easy'):
+        """
+        Generate a math puzzle based on difficulty level
         
+        Args:
+            difficulty (str): 'easy', 'medium', or 'hard'
+        
+        Returns:
+            dict: Contains question, answer, and metadata
+        """
         config = self.difficulty_levels.get(difficulty.lower(), self.difficulty_levels['easy'])
         num_range = config['range']
         operations = config['operations']
@@ -23,8 +31,16 @@ class PuzzleGenerator:
         # Generate numbers based on operation
         if operation == '/':
             # Ensure clean division for division problems
-            divisor = random.randint(2, num_range[1] // 5)
-            quotient = random.randint(num_range[0], num_range[1] // divisor)
+            divisor = random.randint(2, max(3, num_range[1] // 5))
+            max_quotient = num_range[1] // divisor
+            min_quotient = max(1, num_range[0] // divisor)
+            
+            # Ensure valid range for quotient
+            if min_quotient > max_quotient:
+                min_quotient = 2
+                max_quotient = max(3, num_range[1] // divisor)
+            
+            quotient = random.randint(min_quotient, max_quotient)
             num1 = divisor * quotient
             num2 = divisor
             answer = quotient
@@ -53,5 +69,5 @@ class PuzzleGenerator:
         }
     
     def get_difficulty_levels(self):
-        #Return available difficulty levels
+        """Return available difficulty levels"""
         return list(self.difficulty_levels.keys())
